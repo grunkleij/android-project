@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private int currentPage = 1;
     private boolean isLoading = false;
 
+    private String type = "popular";
+
     URL url = new URL("https://api.themoviedb.org/3/movie/popular?api_key=582913cbc1255e68ef241e0956a7ae7c&language=en-US&page=1");
 
     public MainActivity() throws MalformedURLException {
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                             && firstVisibleItemPosition >= 0) {
                         currentPage++;
-                        fetchMovies(currentPage,"popular");
+                        fetchMovies(currentPage,type);
                     }
                 }
             }
@@ -109,10 +111,12 @@ public class MainActivity extends AppCompatActivity {
 
                 if (position == 0) {
                     // Popular selected
-                    fetchMovies(currentPage, "popular");
+                    type = "popular";
+                    fetchMovies(currentPage, type);
                 } else if (position == 1) {
                     // Top rated selected
-                    fetchMovies(currentPage, "top_rated");
+                    type="top_rated";
+                    fetchMovies(currentPage, type);
                 }
             }
 
