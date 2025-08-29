@@ -4,23 +4,23 @@
     <item
         android:id="@+id/item_1"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="Hello"/>
+        android:icon="@drawable/movie_icon"
+        android:title="Movie"/>
     <item
         android:id="@+id/item_2"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="Hello"/>
+        android:icon="@drawable/weather_icon"
+        android:title="Weather"/>
     <item
         android:id="@+id/item_3"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="Hello"/>
+        android:icon="@drawable/currency_icon"
+        android:title="Currency"/>
     <item
         android:id="@+id/item_4"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="Hello"/>
+        android:icon="@drawable/news_icon"
+        android:title="News"/>
 
 
 

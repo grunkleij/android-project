@@ -25,6 +25,18 @@ public class BottomManager {
             activity.overridePendingTransition(0, 0);
             return true;
         }
+        else if(id == R.id.item_3){
+            Intent intent = new Intent(activity, Currency.class);
+            activity.startActivity(intent);
+            activity.overridePendingTransition(0, 0);
+            return true;
+        }
+        else if(id == R.id.item_4){
+            Intent intent = new Intent(activity, NewsMain.class);
+            activity.startActivity(intent);
+            activity.overridePendingTransition(0, 0);
+            return true;
+        }
         return true;
     });
     }
