@@ -75,9 +75,9 @@ public class activity_weather extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
         initializeUI();
-        BottomNavigationView btm = findViewById(R.id.bottom_navigation);
-        BottomManager btmmg = new BottomManager();
-        btmmg.setit(this, R.id.item_2);
+//        BottomNavigationView btm = findViewById(R.id.bottom_navigation);
+//        BottomManager btmmg = new BottomManager();
+//        btmmg.setit(this, R.id.item_2);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         requestLocationAndFetchWeather();
     }

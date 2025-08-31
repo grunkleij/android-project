@@ -11,7 +11,6 @@
         android:id="@+id/content_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_navigation_view"
         android:scrollbars="none">
 
         <LinearLayout
@@ -122,12 +121,5 @@
                 android:orientation="vertical" />
         </LinearLayout>
     </ScrollView>
-
-    <include
-        android:id="@+id/bottom_navigation_view"
-        layout="@layout/bottomnavigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>
