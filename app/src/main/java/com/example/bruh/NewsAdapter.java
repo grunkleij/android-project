@@ -1,6 +1,8 @@
 package com.example.bruh;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,7 @@ import java.util.List;
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
 
     private Context context;
-    private List<Article> articles; // ✅ changed to Article
+    private List<Article> articles;
 
     public NewsAdapter(Context context, List<Article> articles) {
         this.context = context;
@@ -27,21 +29,25 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
     @NonNull
     @Override
     public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.card_comp, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_news, parent, false);
         return new NewsViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
-        Article article = articles.get(position); // ✅ now using Article
+        Article article = articles.get(position);
 
         holder.title.setText(article.getTitle());
         holder.description.setText(article.getDescription());
 
-        // Load image with Glide
         Glide.with(context)
-                .load(article.getUrlToImage())
-                .into(holder.imageView);
+                .load(article.getImage())
+                .into(holder.image);
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(article.getUrl()));
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -51,13 +57,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     public static class NewsViewHolder extends RecyclerView.ViewHolder {
         TextView title, description;
-        ImageView imageView;
+        ImageView image;
 
         public NewsViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.news_title);
-            description = itemView.findViewById(R.id.news_description);
-            imageView = itemView.findViewById(R.id.news_image);
+            title = itemView.findViewById(R.id.textTitle);
+            description = itemView.findViewById(R.id.textDescription);
+            image = itemView.findViewById(R.id.imageNews);
         }
     }
 }

@@ -4,18 +4,13 @@ import java.util.List;
 
 public class NewsResponse {
     private String status;
-    private int totalResults;
-    private List<Article> articles;
+    private List<Article> news;
 
     public String getStatus() {
         return status;
     }
 
-    public int getTotalResults() {
-        return totalResults;
-    }
-
-    public List<Article> getArticles() {
-        return articles;
+    public List<Article> getNews() {
+        return news;
     }
 }

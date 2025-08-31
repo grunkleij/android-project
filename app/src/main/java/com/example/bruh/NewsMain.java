@@ -25,9 +25,9 @@ public class NewsMain extends AppCompatActivity {
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    // Replace this with your actual API key from newsapi.org
-    private static final String API_KEY = "542b67c6dd4440fe8482d735d93c28eb";
-    private static final String BASE_URL = "https://newsapi.org/v2/";
+    // Replace this with your actual API key from Currents API
+    private static final String API_KEY = "8QhelZn7d3iKKXk2hlOwvGl2MxRB0iP0bUB6XHiNKULsCqNF";
+    private static final String BASE_URL = "https://api.currentsapi.services/v1/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +51,15 @@ public class NewsMain extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl("https://api.currentsapi.services/v1/")  // Currents API base URL
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         NewsApiService apiService = retrofit.create(NewsApiService.class);
-        Call<NewsResponse> call = apiService.getTopHeadlines("us", API_KEY);
+
+// Call Currents API endpoint for latest news
+        Call<NewsResponse> call = apiService.getLatestNews(API_KEY);
+
 
         call.enqueue(new Callback<NewsResponse>() {
             @Override
@@ -65,7 +68,7 @@ public class NewsMain extends AppCompatActivity {
                 swipeRefreshLayout.setRefreshing(false);
 
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Article> articles = response.body().getArticles();
+                    List<Article> articles = response.body().getNews();
                     newsAdapter = new NewsAdapter(NewsMain.this, articles);
                     recyclerView.setAdapter(newsAdapter);
                 } else {
