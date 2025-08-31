@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context=".activity_weather">
+
+    <ScrollView
+        android:id="@+id/content_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_navigation_view"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieAnimationView"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="32dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/anim_clouds" />
+
+            <TextView
+                android:id="@+id/textViewCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center_horizontal"
+                android:textColor="@color/text_primary_light"
+                android:textSize="22sp"
+                tools:text="Kozhikode" />
+
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="@color/text_secondary_light"
+                android:textSize="16sp"
+                tools:text="Sunday, 31 August 2025" />
+
+            <TextView
+                android:id="@+id/textViewTemperature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-thin"
+                android:gravity="center_horizontal"
+                android:textColor="@color/text_primary_light"
+                android:textSize="100sp"
+                android:textStyle="bold"
+                tools:text="28°" />
+
+            <TextView
+                android:id="@+id/textViewDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center_horizontal"
+                android:textAllCaps="true"
+                android:textColor="@color/text_primary_light"
+                android:textSize="24sp"
+                tools:text="Thunderstorm" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="48dp"
+                android:background="#2AFFFFFF" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:paddingHorizontal="4dp">
+                    <TextView android:id="@+id/hourly_time_1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_secondary_light" android:textSize="14sp" tools:text="4 PM" />
+                    <ImageView android:id="@+id/hourly_icon_1" android:layout_width="32dp" android:layout_height="32dp" android:layout_marginVertical="8dp" tools:src="@drawable/ic_sunny" />
+                    <TextView android:id="@+id/hourly_temp_1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary_light" android:textSize="16sp" android:textStyle="bold" tools:text="28°" />
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:paddingHorizontal="4dp">
+                    <TextView android:id="@+id/hourly_time_2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_secondary_light" android:textSize="14sp" tools:text="5 PM" />
+                    <ImageView android:id="@+id/hourly_icon_2" android:layout_width="32dp" android:layout_height="32dp" android:layout_marginVertical="8dp" tools:src="@drawable/ic_sunny" />
+                    <TextView android:id="@+id/hourly_temp_2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary_light" android:textSize="16sp" android:textStyle="bold" tools:text="28°" />
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:paddingHorizontal="4dp">
+                    <TextView android:id="@+id/hourly_time_3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_secondary_light" android:textSize="14sp" tools:text="6 PM" />
+                    <ImageView android:id="@+id/hourly_icon_3" android:layout_width="32dp" android:layout_height="32dp" android:layout_marginVertical="8dp" tools:src="@drawable/ic_sunny" />
+                    <TextView android:id="@+id/hourly_temp_3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary_light" android:textSize="16sp" android:textStyle="bold" tools:text="27°" />
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:paddingHorizontal="4dp">
+                    <TextView android:id="@+id/hourly_time_4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_secondary_light" android:textSize="14sp" tools:text="7 PM" />
+                    <ImageView android:id="@+id/hourly_icon_4" android:layout_width="32dp" android:layout_height="32dp" android:layout_marginVertical="8dp" tools:src="@drawable/ic_sunny" />
+                    <TextView android:id="@+id/hourly_temp_4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary_light" android:textSize="16sp" android:textStyle="bold" tools:text="27°" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="This Week"
+                android:textColor="@color/text_primary_light"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:id="@+id/weekly_forecast_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/bottom_navigation_view"
+        layout="@layout/bottomnavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

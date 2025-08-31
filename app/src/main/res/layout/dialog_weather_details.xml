@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_opaque_background"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/dialog_day_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:text="Day Details"
+        android:textColor="@color/text_primary_light"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/dialog_description_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Forecast: Clear Sky"
+        android:textColor="@color/text_secondary_light"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/dialog_temp_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Temperature: 28°C"
+        android:textColor="@color/text_secondary_light"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/dialog_humidity_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Humidity: 75%"
+        android:textColor="@color/text_secondary_light"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/dialog_wind_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Wind Speed: 5 km/h"
+        android:textColor="@color/text_secondary_light"
+        android:textSize="18sp" />
+</LinearLayout>
