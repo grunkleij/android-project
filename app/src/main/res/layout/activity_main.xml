@@ -6,12 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-
     >
+
     <include layout="@layout/bottomnavigation" android:id="@+id/bottomnav"/>
 
-<!--    search start-->
-    <!-- Search Bar -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/searchContainer"
         android:layout_width="0dp"
@@ -25,7 +23,9 @@
         android:layout_margin="8dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:endIconMode="clear_text"
+        app:boxStrokeColor="@color/design_default_color_primary">
 
         <AutoCompleteTextView
             android:id="@+id/etSearchMovies"
@@ -38,19 +38,12 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
-
-
-<!--    search end-->
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMovies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="132dp"
         android:padding="8dp"
-
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/tablayout"
         app:spanCount="2"
@@ -65,7 +58,10 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchContainer"
-        app:layout_constraintVertical_bias="0.024">
+        app:layout_constraintVertical_bias="0.024"
+        app:tabIndicatorColor="@color/design_default_color_primary"
+        app:tabSelectedTextColor="@color/design_default_color_primary"
+        app:tabTextColor="#888888">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/pop"
@@ -79,8 +75,6 @@
             android:layout_height="wrap_content"
             android:text="Top rated" />
 
-
     </com.google.android.material.tabs.TabLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

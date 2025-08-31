@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1C1C1E"
+    android:background="#121212"
     tools:context=".MovieDetailsPage">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:paddingBottom="24dp">
 
-        <!-- Backdrop Image -->
         <ImageView
             android:id="@+id/movieBackdrop"
             android:layout_width="0dp"
@@ -23,20 +22,24 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/backgrounds/scenic" />
 
-        <!-- Poster Image -->
-        <ImageView
-            android:id="@+id/moviePoster"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/posterCard"
             android:layout_width="120dp"
             android:layout_height="180dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="150dp"
-            android:elevation="8dp"
-            android:scaleType="centerCrop"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" />
+            app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                android:id="@+id/moviePoster"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:src="@tools:sample/avatars" />
+        </com.google.android.material.card.MaterialCardView>
 
-        <!-- Movie Title -->
         <TextView
             android:id="@+id/movieTitle"
             android:layout_width="0dp"
@@ -44,21 +47,23 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
+            android:shadowColor="#000000"
+            android:shadowDy="2"
+            android:shadowRadius="4"
             android:textColor="@android:color/white"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/moviePoster"
+            app:layout_constraintStart_toEndOf="@+id/posterCard"
             app:layout_constraintTop_toBottomOf="@+id/movieBackdrop"
             tools:text="Movie Title Goes Here" />
 
-        <!-- Tagline -->
         <TextView
             android:id="@+id/movieTagline"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textColor="#BDBDBD"
+            android:textColor="#CCCCCC"
             android:textSize="14sp"
             android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="@+id/movieTitle"
@@ -66,87 +71,89 @@
             app:layout_constraintTop_toBottomOf="@+id/movieTitle"
             tools:text="An exciting tagline." />
 
-        <!-- Info Section: Rating, Runtime, Release Date -->
         <LinearLayout
             android:id="@+id/infoLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
+            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/moviePoster"
-            app:layout_constraintTop_toBottomOf="@+id/moviePoster">
+            app:layout_constraintStart_toStartOf="@+id/posterCard"
+            app:layout_constraintTop_toBottomOf="@+id/posterCard">
 
-            <!-- Rating -->
             <TextView
                 android:id="@+id/movieRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="4dp"
+                android:drawablePadding="6dp"
                 android:gravity="center"
-                android:textColor="#FFD700"
+                android:textColor="#FFC107"
                 android:textStyle="bold"
-                tools:text="8.5 / 10" />
+                app:drawableStartCompat="@drawable/ic_star"
+                app:drawableTint="#FFC107"
+                tools:text="8.5" />
 
-            <!-- Runtime -->
             <TextView
                 android:id="@+id/movieRuntime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:drawablePadding="4dp"
+                android:drawablePadding="6dp"
                 android:gravity="center"
                 android:textColor="#BDBDBD"
+                app:drawableStartCompat="@drawable/ic_clock"
+                app:drawableTint="#BDBDBD"
                 tools:text="148 min" />
 
-            <!-- Release Date -->
             <TextView
                 android:id="@+id/movieReleaseDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:drawablePadding="4dp"
+                android:drawablePadding="6dp"
                 android:gravity="center"
                 android:textColor="#BDBDBD"
-                tools:text="2010-07-16" />
+                app:drawableStartCompat="@drawable/ic_calender"
+                app:drawableTint="#BDBDBD"
+                tools:text="2010" />
         </LinearLayout>
 
-        <!-- Genres -->
         <TextView
             android:id="@+id/movieGenres"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textColor="#E0E0E0"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="#009688"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/infoLayout"
             app:layout_constraintTop_toBottomOf="@+id/infoLayout"
-            tools:text="Action, Adventure, Sci-Fi" />
+            tools:text="Action • Adventure • Sci-Fi" />
 
 
-        <!-- Overview Header -->
         <TextView
             android:id="@+id/overviewHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:text="Overview"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/movieGenres"
             app:layout_constraintTop_toBottomOf="@+id/movieGenres" />
 
-        <!-- Overview Content -->
         <TextView
             android:id="@+id/movieOverview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:lineSpacingExtra="4dp"
-            android:textColor="#BDBDBD"
-            android:textSize="14sp"
+            android:lineSpacingExtra="5dp"
+            android:textColor="#E0E0E0"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/overviewHeader"
             app:layout_constraintTop_toBottomOf="@+id/overviewHeader"
