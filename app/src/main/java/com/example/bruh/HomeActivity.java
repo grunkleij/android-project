@@ -7,9 +7,6 @@ import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -41,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         weather.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, MainActivity2.class);
+                Intent intent = new Intent(HomeActivity.this, activity_weather.class);
                 startActivity(intent);
             }
         });

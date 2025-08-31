@@ -20,7 +20,7 @@ public class BottomManager {
             return true;
         }
         else if(id == R.id.item_2){
-            Intent intent = new Intent(activity, MainActivity2.class);
+            Intent intent = new Intent(activity, activity_weather.class);
             activity.startActivity(intent);
             activity.overridePendingTransition(0, 0);
             return true;
