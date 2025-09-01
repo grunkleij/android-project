@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#121212"
     tools:context=".Currency">
 
     <!-- Toolbar -->
@@ -115,7 +115,8 @@
                 android:layout_height="match_parent"
                 android:hint="Enter amount"
                 android:inputType="numberDecimal"
-                android:padding="12dp" />
+                android:padding="12dp"
+                android:background="@null"/>
         </com.google.android.material.card.MaterialCardView>
 
         <!-- From Currency Dropdown -->
@@ -135,7 +136,9 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="From Currency">
+                android:hint="From Currency"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
 
                 <AutoCompleteTextView
                     android:id="@+id/fromCurrencyDropdown"
@@ -163,8 +166,9 @@
                 android:id="@+id/toCurrencyLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="To Currency">
+                android:layout_height="match_parent"
+                android:hint="To Currency"
+                app:boxStrokeWidth="0dp">
 
                 <AutoCompleteTextView
                     android:id="@+id/toCurrencyDropdown"
