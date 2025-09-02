@@ -17,6 +17,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import androidx.appcompat.app.AppCompatDelegate;
 
 public class NewsMain extends AppCompatActivity {
 
@@ -32,6 +33,7 @@ public class NewsMain extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         setContentView(R.layout.activity_news_main);
 
         recyclerView = findViewById(R.id.recyclerViewNews);
