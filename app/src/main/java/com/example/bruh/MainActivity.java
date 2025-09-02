@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
         // EdgeToEdge.enable(this); // You can keep this if you like
         setContentView(R.layout.activity_main);
 
-        BottomManager btmmg = new BottomManager();
-        btmmg.setit(this, R.id.item_1);
+//        BottomManager btmmg = new BottomManager();
+//        btmmg.setit(this, R.id.item_1);
 
         // --- NEW ---
         etSearchMovies = findViewById(R.id.etSearchMovies);
