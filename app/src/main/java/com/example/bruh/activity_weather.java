@@ -1,14 +1,20 @@
-package com.example.bruh; // Make sure this is your correct package name
+package com.example.bruh; // Use your correct package name
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,7 +27,6 @@ import androidx.core.app.ActivityCompat;
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,20 +46,23 @@ public class activity_weather extends AppCompatActivity {
 
     private static final String API_KEY = "e540de4b9d31d482b34c093ab7cf2326"; // ⬇️ PASTE YOUR API KEY HERE ⬇️
     private static final String BASE_URL = "https://api.openweathermap.org/";
-    private static final String TAG = "activity_weather";
+    private static final String TAG = "MainActivity";
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 101;
 
-    private FusedLocationProviderClient fusedLocationClient;
+    private FusedLocationProviderClient fusedLocationProviderClient;
     private TextView textViewDate, textViewCity, textViewTemperature, textViewDescription;
-   // private ImageView imageViewWeatherIcon;
     private LottieAnimationView lottieAnimationView;
+    private AutoCompleteTextView autoCompleteTextView;
     private LinearLayout weeklyForecastContainer;
 
-    private TextView[] hourlyTimes = new TextView[4];
-    private ImageView[] hourlyIcons = new ImageView[4];
-    private TextView[] hourlyTemps = new TextView[4];
+    private final TextView[] hourlyTimes = new TextView[4];
+    private final ImageView[] hourlyIcons = new ImageView[4];
+    private final TextView[] hourlyTemps = new TextView[4];
 
-    private static class ForecastDay {
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private Runnable workRunnable;
+
+    public static class ForecastDay {
         String dayOfWeek, date, description, condition;
         double temperature, windSpeed;
         int humidity;
@@ -74,21 +82,21 @@ public class activity_weather extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
+
         initializeUI();
-//        BottomNavigationView btm = findViewById(R.id.bottom_navigation);
-//        BottomManager btmmg = new BottomManager();
-//        btmmg.setit(this, R.id.item_2);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        setupAutoCompleteTextView();
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         requestLocationAndFetchWeather();
     }
 
     private void initializeUI() {
         textViewDate = findViewById(R.id.textViewDate);
         textViewCity = findViewById(R.id.textViewCity);
-       // imageViewWeatherIcon = findViewById(R.id.imageViewWeatherIcon);
         textViewTemperature = findViewById(R.id.textViewTemperature);
         textViewDescription = findViewById(R.id.textViewDescription);
         lottieAnimationView = findViewById(R.id.lottieAnimationView);
+        autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
         weeklyForecastContainer = findViewById(R.id.weekly_forecast_container);
 
         hourlyTimes[0] = findViewById(R.id.hourly_time_1);
@@ -108,17 +116,69 @@ public class activity_weather extends AppCompatActivity {
         hourlyTemps[3] = findViewById(R.id.hourly_temp_4);
     }
 
+    private void setupAutoCompleteTextView() {
+        ArrayAdapter<GeoCodingResponse> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line);
+        autoCompleteTextView.setAdapter(adapter);
+        autoCompleteTextView.setThreshold(3); // Start searching after 3 characters
+
+        autoCompleteTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                handler.removeCallbacks(workRunnable);
+                workRunnable = () -> fetchCitySuggestions(s.toString(), adapter);
+                handler.postDelayed(workRunnable, 500); // 500ms delay to avoid excessive API calls
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        autoCompleteTextView.setOnItemClickListener((parent, view, position, id) -> {
+            GeoCodingResponse selectedCity = (GeoCodingResponse) parent.getItemAtPosition(position);
+            String cityName = selectedCity.getName();
+            fetchWeatherDataByCity(cityName);
+            hideKeyboard();
+        });
+    }
+
+    private void fetchCitySuggestions(String query, ArrayAdapter<GeoCodingResponse> adapter) {
+        if (query.length() < 3) return;
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+        WeatherService service = retrofit.create(WeatherService.class);
+        Call<List<GeoCodingResponse>> call = service.getCitySuggestions(query, 5, API_KEY);
+
+        call.enqueue(new Callback<List<GeoCodingResponse>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<GeoCodingResponse>> call, @NonNull Response<List<GeoCodingResponse>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    adapter.clear();
+                    adapter.addAll(response.body());
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<GeoCodingResponse>> call, @NonNull Throwable t) {
+                Log.e(TAG, "City suggestion fetch failed: " + t.getMessage());
+            }
+        });
+    }
+
     private void requestLocationAndFetchWeather() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
             return;
         }
-        fusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, location -> {
             if (location != null) {
                 fetchWeatherData(location.getLatitude(), location.getLongitude());
             } else {
                 Toast.makeText(this, "Location not found. Using default.", Toast.LENGTH_SHORT).show();
-                fetchWeatherData(11.2588, 75.7804); // Default to Kozhikode
+                fetchWeatherData(10.5276, 76.2144); // Default to Thrissur
             }
         });
     }
@@ -127,7 +187,17 @@ public class activity_weather extends AppCompatActivity {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
         WeatherService service = retrofit.create(WeatherService.class);
         Call<WeatherResponse> call = service.getCurrentWeather(latitude, longitude, API_KEY, "metric");
+        enqueueWeatherCall(call);
+    }
 
+    private void fetchWeatherDataByCity(String cityName) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+        WeatherService service = retrofit.create(WeatherService.class);
+        Call<WeatherResponse> call = service.getCurrentWeatherByCity(cityName, API_KEY, "metric");
+        enqueueWeatherCall(call);
+    }
+
+    private void enqueueWeatherCall(Call<WeatherResponse> call) {
         call.enqueue(new Callback<WeatherResponse>() {
             @Override
             public void onResponse(@NonNull Call<WeatherResponse> call, @NonNull Response<WeatherResponse> response) {
@@ -135,14 +205,14 @@ public class activity_weather extends AppCompatActivity {
                     updateUI(response.body());
                 } else {
                     Log.e(TAG, "API Error: " + response.code());
-                    Toast.makeText(activity_weather.this, "Failed to get weather. Check API Key.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity_weather.this, "Could not find location. Please try again.", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<WeatherResponse> call, @NonNull Throwable t) {
                 Log.e(TAG, "API Failure: " + t.getMessage(), t);
-                Toast.makeText(activity_weather.this, "Network error.", Toast.LENGTH_LONG).show();
+                Toast.makeText(activity_weather.this, "Network error. Check connection.", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -155,7 +225,7 @@ public class activity_weather extends AppCompatActivity {
                 requestLocationAndFetchWeather();
             } else {
                 Toast.makeText(this, "Permission denied. Using default location.", Toast.LENGTH_LONG).show();
-                fetchWeatherData(11.2588, 75.7804); // Default to Kozhikode
+                fetchWeatherData(10.5276, 76.2144);
             }
         }
     }
@@ -169,11 +239,7 @@ public class activity_weather extends AppCompatActivity {
         String description = weatherResponse.getWeather().get(0).getDescription();
         textViewDescription.setText(description.substring(0, 1).toUpperCase() + description.substring(1));
 
-        //setWeatherIcon(mainCondition, imageViewWeatherIcon);
         updateWeatherAnimation(mainCondition);
-        //Animation fadeInSlide = AnimationUtils.loadAnimation(this, R.anim.fade_in_slide);
-       // imageViewWeatherIcon.startAnimation(fadeInSlide);
-
         populateHourlyForecast(weatherResponse);
         populateWeeklyForecast(weatherResponse);
     }
@@ -184,9 +250,11 @@ public class activity_weather extends AppCompatActivity {
         for (int i = 0; i < 4; i++) {
             Calendar futureCal = (Calendar) cal.clone();
             futureCal.add(Calendar.HOUR_OF_DAY, i);
-            hourlyTimes[i].setText(hourFormat.format(futureCal.getTime()));
-            hourlyTemps[i].setText(String.format(Locale.getDefault(), "%.0f°", data.getMain().getTemp() - (i * 0.5)));
-            setWeatherIcon(data.getWeather().get(0).getMain(), hourlyIcons[i]);
+            if (hourlyTimes[i] != null) {
+                hourlyTimes[i].setText(hourFormat.format(futureCal.getTime()));
+                hourlyTemps[i].setText(String.format(Locale.getDefault(), "%.0f°", data.getMain().getTemp() - (i * 0.5)));
+                setWeatherIcon(data.getWeather().get(0).getMain(), hourlyIcons[i]);
+            }
         }
     }
 
@@ -239,7 +307,8 @@ public class activity_weather extends AppCompatActivity {
         lottieAnimationView.playAnimation();
     }
 
-    private void setWeatherIcon(String condition, ImageView imageView) {
+    public void setWeatherIcon(String condition, ImageView imageView) {
+        if (imageView == null) return;
         int iconResId;
         switch (condition.toLowerCase()) {
             case "clear": iconResId = R.drawable.ic_sunny; break;
@@ -265,11 +334,20 @@ public class activity_weather extends AppCompatActivity {
         dialogDesc.setText("Forecast: " + day.description.substring(0, 1).toUpperCase() + day.description.substring(1));
         dialogTemp.setText(String.format(Locale.getDefault(), "Temperature: %.0f°C", day.temperature));
         dialogHumidity.setText(String.format(Locale.getDefault(), "Humidity: %d%%", day.humidity));
-        dialogWind.setText(String.format(Locale.getDefault(), "Wind Speed: %.1f km/h", day.windSpeed * 3.6)); // Convert m/s to km/h
+        dialogWind.setText(String.format(Locale.getDefault(), "Wind Speed: %.1f km/h", day.windSpeed * 3.6));
         dialog.show();
     }
 
     private String getCurrentDateFormatted(String pattern) {
         return new SimpleDateFormat(pattern, Locale.getDefault()).format(new Date());
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        View view = getCurrentFocus();
+        if (view == null) {
+            view = new View(this);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
