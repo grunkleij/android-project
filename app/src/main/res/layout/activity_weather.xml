@@ -5,12 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
-    tools:context=".activity_weather">
+    tools:context=".MainActivity">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/searchTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="Search for a city..."
+        app:boxCornerRadiusBottomEnd="25dp"
+        app:boxCornerRadiusBottomStart="25dp"
+        app:boxCornerRadiusTopEnd="25dp"
+        app:boxCornerRadiusTopStart="25dp">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:inputType="text"
+            android:paddingStart="16dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ScrollView
         android:id="@+id/content_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/searchTextInputLayout"
         android:scrollbars="none">
 
         <LinearLayout
@@ -24,7 +46,7 @@
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="8dp"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/anim_clouds" />
@@ -46,7 +68,7 @@
                 android:gravity="center_horizontal"
                 android:textColor="@color/text_secondary_light"
                 android:textSize="16sp"
-                tools:text="Sunday, 31 August 2025" />
+                tools:text="Wednesday, 3 September 2025" />
 
             <TextView
                 android:id="@+id/textViewTemperature"
@@ -83,22 +105,22 @@
                 android:orientation="horizontal">
 
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:paddingHorizontal="4dp">
-                    <TextView android:id="@+id/hourly_time_1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_secondary_light" android:textSize="14sp" tools:text="4 PM" />
+                    <TextView android:id="@+id/hourly_time_1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_secondary_light" android:textSize="14sp" tools:text="1 PM" />
                     <ImageView android:id="@+id/hourly_icon_1" android:layout_width="32dp" android:layout_height="32dp" android:layout_marginVertical="8dp" tools:src="@drawable/ic_sunny" />
                     <TextView android:id="@+id/hourly_temp_1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary_light" android:textSize="16sp" android:textStyle="bold" tools:text="28°" />
                 </LinearLayout>
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:paddingHorizontal="4dp">
-                    <TextView android:id="@+id/hourly_time_2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_secondary_light" android:textSize="14sp" tools:text="5 PM" />
+                    <TextView android:id="@+id/hourly_time_2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_secondary_light" android:textSize="14sp" tools:text="2 PM" />
                     <ImageView android:id="@+id/hourly_icon_2" android:layout_width="32dp" android:layout_height="32dp" android:layout_marginVertical="8dp" tools:src="@drawable/ic_sunny" />
                     <TextView android:id="@+id/hourly_temp_2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary_light" android:textSize="16sp" android:textStyle="bold" tools:text="28°" />
                 </LinearLayout>
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:paddingHorizontal="4dp">
-                    <TextView android:id="@+id/hourly_time_3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_secondary_light" android:textSize="14sp" tools:text="6 PM" />
+                    <TextView android:id="@+id/hourly_time_3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_secondary_light" android:textSize="14sp" tools:text="3 PM" />
                     <ImageView android:id="@+id/hourly_icon_3" android:layout_width="32dp" android:layout_height="32dp" android:layout_marginVertical="8dp" tools:src="@drawable/ic_sunny" />
                     <TextView android:id="@+id/hourly_temp_3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary_light" android:textSize="16sp" android:textStyle="bold" tools:text="27°" />
                 </LinearLayout>
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:paddingHorizontal="4dp">
-                    <TextView android:id="@+id/hourly_time_4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_secondary_light" android:textSize="14sp" tools:text="7 PM" />
+                    <TextView android:id="@+id/hourly_time_4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_secondary_light" android:textSize="14sp" tools:text="4 PM" />
                     <ImageView android:id="@+id/hourly_icon_4" android:layout_width="32dp" android:layout_height="32dp" android:layout_marginVertical="8dp" tools:src="@drawable/ic_sunny" />
                     <TextView android:id="@+id/hourly_temp_4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary_light" android:textSize="16sp" android:textStyle="bold" tools:text="27°" />
                 </LinearLayout>
