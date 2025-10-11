@@ -2,108 +2,183 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/weather"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F7FA"
+    android:background="@color/dark_theme_background"
     tools:context=".HomeActivity">
 
-    <!-- Movie Button -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/movie_btn"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+    <!-- Section 1: Greeting -->
+    <TextView
+        android:id="@+id/greeting_text"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="🎬 Movie"
-        android:textAllCaps="false"
-        android:textSize="18sp"
-        android:backgroundTint="#FFFFFF"
-        android:textColor="#333333"
-        app:cornerRadius="20dp"
-        app:strokeColor="#6200EE"
-        app:strokeWidth="2dp"
-        android:padding="12dp"
-        app:icon="@drawable/movie_icon"
-        app:iconTint="#6200EE"
-        app:iconGravity="textStart"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="24dp"
+        android:text="Good Afternoon!"
+        android:textColor="@color/dark_theme_text_primary"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/sub_greeting_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/weather_btn"
-        app:layout_constraintVertical_chainStyle="spread"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="32dp"/>
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
-    <!-- Weather Button -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/weather_btn"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+    <TextView
+        android:id="@+id/sub_greeting_text"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="☀️ Weather"
-        android:textAllCaps="false"
-        android:textSize="18sp"
-        android:backgroundTint="#FFFFFF"
-        android:textColor="#333333"
-        app:cornerRadius="20dp"
-        app:strokeColor="#009688"
-        app:strokeWidth="2dp"
-        android:padding="12dp"
-        app:icon="@drawable/weather_icon"
-        app:iconTint="#009688"
-        app:iconGravity="textStart"
-        app:layout_constraintTop_toBottomOf="@id/movie_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/currency_btn"
-        android:layout_marginHorizontal="32dp"/>
+        android:layout_height="wrap_content"
+        android:text="Here are your quick actions"
+        android:textColor="@color/dark_theme_text_secondary"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/carousel_recycler_view"
+        app:layout_constraintEnd_toEndOf="@id/greeting_text"
+        app:layout_constraintStart_toStartOf="@id/greeting_text"
+        app:layout_constraintTop_toBottomOf="@id/greeting_text" />
 
-    <!-- Currency Button -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/currency_btn"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="💱 Currency"
-        android:textAllCaps="false"
-        android:textSize="18sp"
-        android:backgroundTint="#FFFFFF"
-        android:textColor="#333333"
-        app:cornerRadius="20dp"
-        app:strokeColor="#FF9800"
-        app:strokeWidth="2dp"
-        android:padding="12dp"
-        app:icon="@drawable/currency_icon"
-        app:iconTint="#FF9800"
-        app:iconGravity="textStart"
-        app:layout_constraintTop_toBottomOf="@id/weather_btn"
-        app:layout_constraintStart_toStartOf="parent"
+    <!-- Section 2: Carousel -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/carousel_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintBottom_toTopOf="@id/highlights_header"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/news_btn"
-        android:layout_marginHorizontal="32dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sub_greeting_text"
+        tools:listitem="@layout/carousel_item_layout" />
 
-    <!-- News Button -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/news_btn"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="📰 News"
-        android:textAllCaps="false"
+    <!-- Section 3: Today's Highlights Card -->
+    <TextView
+        android:id="@+id/highlights_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Today's Highlights"
+        android:textColor="@color/dark_theme_text_primary"
         android:textSize="18sp"
-        android:backgroundTint="#FFFFFF"
-        android:textColor="#333333"
-        app:cornerRadius="20dp"
-        app:strokeColor="#3F51B5"
-        app:strokeWidth="2dp"
-        android:padding="12dp"
-        app:icon="@drawable/news_icon"
-        app:iconTint="#3F51B5"
-        app:iconGravity="textStart"
-        app:layout_constraintTop_toBottomOf="@id/currency_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/highlights_card"
+        app:layout_constraintStart_toStartOf="@id/greeting_text"
+        app:layout_constraintTop_toBottomOf="@id/carousel_recycler_view" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/highlights_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:cardBackgroundColor="#2C2D30"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginHorizontal="32dp"/>
+        app:layout_constraintEnd_toEndOf="@id/greeting_text"
+        app:layout_constraintStart_toStartOf="@id/greeting_text"
+        app:layout_constraintTop_toBottomOf="@id/highlights_header">
+
+        <!-- The content of this card (ImageViews, TextViews) remains exactly the same -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="12dp">
+
+            <!-- Weather Row -->
+            <ImageView
+                android:id="@+id/highlight_weather_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:src="@drawable/ic_cloudy"
+                app:tint="@color/dark_theme_text_secondary"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView
+                android:id="@+id/highlight_weather_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Kochi: 30°C, Partly Cloudy"
+                android:textColor="@color/dark_theme_text_secondary"
+                app:layout_constraintStart_toEndOf="@id/highlight_weather_icon"
+                app:layout_constraintTop_toTopOf="@id/highlight_weather_icon"
+                app:layout_constraintBottom_toBottomOf="@id/highlight_weather_icon"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <!-- News Row -->
+            <ImageView
+                android:id="@+id/highlight_news_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="24dp"
+                android:src="@drawable/ic_news"
+                app:tint="@color/dark_theme_text_secondary"
+                app:layout_constraintTop_toBottomOf="@id/highlight_weather_icon"
+                app:layout_constraintStart_toStartOf="@id/highlight_weather_icon"/>
+            <TextView
+                android:id="@+id/highlight_news_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Top Headline: ISRO launches new satellite..."
+                android:textColor="@color/dark_theme_text_secondary"
+                android:maxLines="1"
+                android:ellipsize="end"
+                app:layout_constraintStart_toEndOf="@id/highlight_news_icon"
+                app:layout_constraintTop_toTopOf="@id/highlight_news_icon"
+                app:layout_constraintBottom_toBottomOf="@id/highlight_news_icon"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <!-- Currency Row -->
+            <ImageView
+                android:id="@+id/highlight_currency_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="24dp"
+                android:src="@drawable/ic_currency_rupee"
+                app:tint="@color/dark_theme_text_secondary"
+                app:layout_constraintTop_toBottomOf="@id/highlight_news_icon"
+                app:layout_constraintStart_toStartOf="@id/highlight_weather_icon"/>
+            <TextView
+                android:id="@+id/highlight_currency_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="USD → INR: ₹83.52"
+                android:textColor="@color/dark_theme_text_secondary"
+                app:layout_constraintStart_toEndOf="@id/highlight_currency_icon"
+                app:layout_constraintTop_toTopOf="@id/highlight_currency_icon"
+                app:layout_constraintBottom_toBottomOf="@id/highlight_currency_icon"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <!-- Movie Row -->
+            <ImageView
+                android:id="@+id/highlight_movie_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="12dp"
+                android:src="@drawable/ic_movie_recommendation"
+                app:tint="@color/dark_theme_text_secondary"
+                app:layout_constraintTop_toBottomOf="@id/highlight_currency_icon"
+                app:layout_constraintStart_toStartOf="@id/highlight_weather_icon"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                android:id="@+id/highlight_movie_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Recommendation: 'Dune: Part Two'"
+                android:textColor="@color/dark_theme_text_secondary"
+                android:maxLines="1"
+                android:ellipsize="end"
+                app:layout_constraintStart_toEndOf="@id/highlight_movie_icon"
+                app:layout_constraintTop_toTopOf="@id/highlight_movie_icon"
+                app:layout_constraintBottom_toBottomOf="@id/highlight_movie_icon"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
